@@ -115,7 +115,7 @@ Create a method inside of you controller like this.
       render :json => url_response
     end
 
-Add your routes should something like this
+Your routes should something like this
     
     post "images/upload" => "posts#upload"
 
