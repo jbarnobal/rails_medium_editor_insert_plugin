@@ -44,22 +44,23 @@ You can use any of this gem
 Create a method inside of you controller like this.
 
 
-  def upload
-    image = current_user.posts.new(image: params[:files].first)
-    image.save
-    url_response = {
-      files: [
-        {
-          url: @image.image.url,
-          thumbnail_url: @image.image.url,
-          name: @image.image_identifier,
-          type: "image/jpeg",
-          size: 0
-        }
-      ]
-    }
-    render :json => url_response
-  end
+                def upload
+                    image = current_user.posts.new(image: params[:files].first)
+                    image.save
+                    url_response = {
+                      files: [
+                        {
+                          url: @image.image.url,
+                          thumbnail_url: @image.image.url,
+                          name: @image.image_identifier,
+                          type: "image/jpeg",
+                          size: 0
+                        }
+                      ]
+                    }
+                    render :json => url_response
+                end
+ 
 
 ## Development
 
