@@ -1,7 +1,7 @@
-//=require medium_editor/handlebars
-//=require medium_editor/jquery-fileupload
-//=require medium_editor/jquery-iframe-transport
-//=require medium_editor/jquery-sortable
-//=require medium_editor/jquery-ui-widget
-//=require medium_editor/medium-editor-insert-plugin
-//=require medium_editor/medium-editor
+//=require medium_editor_js/handlebars
+//=require medium_editor_js/jquery-fileupload
+//=require medium_editor_js/jquery-iframe-transport
+//=require medium_editor_js/jquery-sortable
+//=require medium_editor_js/jquery-ui-widget
+//=require medium_editor_js/medium-editor-insert-plugin
+//=require medium_editor_js/medium-editor
