@@ -1,4 +1,6 @@
 # Rails-Medium-Editor-Insert-Plugin
+A simple and minimal editor for rails from [medium-editor-insert-plugin](https://github.com/orthes/medium-editor-insert-plugin)
+
 
 ## Installation
 
