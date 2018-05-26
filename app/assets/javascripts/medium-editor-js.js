@@ -1,0 +1,1 @@
+//= require rails-medium-editor-insert-plugin
