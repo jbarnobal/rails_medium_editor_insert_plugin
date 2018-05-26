@@ -96,6 +96,7 @@ You can use any of this gem for file upload
 Create a method inside of you controller like this.
 
 
+
     def upload
       # image = current_user.posts.new(image: params[:files].first) -> // if you are using devise 
       image = Posts.new(image: params[:files].first)
