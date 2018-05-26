@@ -1,8 +1,4 @@
-# RailsMediumEditorInsertPlugin
-
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/rails_medium_editor_insert_plugin`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+# Rails-Medium-Editor-Insert-Plugin
 
 ## Installation
 
@@ -22,7 +18,48 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+This gem need a font-awesome gem
+
+    $ gem "font-awesome-rails"
+
+after installing gem add this into your:
+
+/assets/javascripts/application.js
+
+    //= require medium-editor-js
+
+/assets/stylesheets/applications.css
+
+    *= require medium-editor-style
+    *= require font-awesome
+
+
+## Using this gem in you rails app
+
+
+## Handle image uploaing
+You can use any of this gem  
+[carrierwave link](https://www.google.com)
+
+Create a method inside of you controller like this.
+
+
+  def upload
+    image = current_user.posts.new(image: params[:files].first)
+    image.save
+    url_response = {
+      files: [
+        {
+          url: @image.image.url,
+          thumbnail_url: @image.image.url,
+          name: @image.image_identifier,
+          type: "image/jpeg",
+          size: 0
+        }
+      ]
+    }
+    render :json => url_response
+  end
 
 ## Development
 
@@ -38,6 +75,4 @@ Bug reports and pull requests are welcome on GitHub at https://github.com/[USERN
 
 The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
 
-## Code of Conduct
 
-Everyone interacting in the RailsMediumEditorInsertPlugin project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/[USERNAME]/rails_medium_editor_insert_plugin/blob/master/CODE_OF_CONDUCT.md).
