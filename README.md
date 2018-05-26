@@ -36,30 +36,90 @@ after installing gem add this into your:
 
 ## Using this gem in you rails app
 
+Inside of your rails form
 
-## Handle image uploaing
-You can use any of this gem  
-[carrierwave link](https://www.google.com)
+    <%= form_with model: @post, class: 'editor-form', local: true  do |post|%>
+      # forn_with is for rails 5+
+      <div class="field">
+        <div class="control">
+          <%= post.text_area :body, class: 'editable'%> 
+        </div>
+      </div>
+
+      <%= post.submit 'Publish', class: 'button is-primary is-rounded'%>
+
+    <% end %>
+
+and initialize your editor
+  
+    $(document).on('turbolinks:load', function(){
+
+      var editor = new MediumEditor('.editable',{
+         placeholder: {
+              text: "Write a story"
+            }
+      });
+      
+
+      $(function () {
+        $('.editable').mediumInsert({
+            editor: editor,
+            enabled: true,
+
+            addons: {
+              images: {
+                fileUploadOptions: {
+                  url: '/images/upload', // your uploading image routes: post "images/upload" => "posts#upload"
+                  type: 'post',
+                  acceptFileTypes: /(.|\/)(gif|jpe?g|png)$/i
+                },
+                  fileDeleteOptions: {
+                  url: '/image/delete',
+                  type: 'delete'
+                }
+              }
+            }
+        });
+      });
+    })
+
+      
+## Add image upload in your rails app controller
+
+You can use any of this gem for file upload
+
+[carrierwave link](https://github.com/carrierwaveuploader/carrierwave)
+
+[paperclip link](https://github.com/thoughtbot/paperclip)
+
 
 Create a method inside of you controller like this.
 
 
-  def upload
-    image = current_user.posts.new(image: params[:files].first)
-    image.save
-    url_response = {
-      files: [
-        {
-          url: @image.image.url,
-          thumbnail_url: @image.image.url,
-          name: @image.image_identifier,
-          type: "image/jpeg",
-          size: 0
-        }
-      ]
-    }
-    render :json => url_response
-  end
+    def upload
+      # image = current_user.posts.new(image: params[:files].first) -> // if you are using devise 
+      image = Posts.new(image: params[:files].first)
+      image.save
+      url_response = {
+        files: [
+          {
+            url: @image.image.url,
+            thumbnail_url: @image.image.url,
+            name: @image.image_identifier,
+            type: "image/jpeg",
+            size: 0
+          }
+        ]
+      }
+      render :json => url_response
+    end
+
+Add your routes should something like this
+    
+    post "images/upload" => "posts#upload"
+
+
+This code block comes from this man [ mwlang ](https://github.com/mwlang/medium-editor-insert-plugin-rails) big thanks to him
 
 ## Development
 
