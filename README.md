@@ -130,28 +130,27 @@ You can make your own storage model, this is just a reference
 	# Upload model
 
 	class Upload < ApplicationRecord
-		has_one_attached :image
+	   has_one_attached :image
 	end
 
 
 	# UploadsController
 
 	class UploadsController < ApplicationController
-		def uploader
-			@image = Upload.new(image: params[:files].first)
-		  url_response = {
-		    files: [
-		      {
-		        url: url_for(@image.image),
-		        thumbnail_url: url_for(@image.image),
-		        type: "image/jpeg",
-		        size: 0
-		      }
-		    ]
-		  }
-		  render json: url_response
-		end
-
+	  def uploader
+	    @image = Upload.new(image: params[:files].first)
+	    url_response = {
+	      files: [
+	        {
+		  url: url_for(@image.image),
+		  thumbnail_url: url_for(@image.image),
+		  type: "image/jpeg",
+		  size: 0
+	        }
+	      ]
+	      }
+	    render json: url_response
+	  end
 	end
 
 ## ActiveStorage with Cloudinary
@@ -165,13 +164,13 @@ Use this gem
 and in your storage_yml. Add 'options:' if you want to serve your assests in https.
 	
 	cloudinary:
-  		service: Cloudinary
-  		cloud_name: <%= ENV['CLOUDINARY_CLOUD_NAME'] %>
-  		api_key:    <%= ENV['CLOUDINARY_API_KEY'] %>
-  		api_secret: <%= ENV['CLOUDINARY_API_SECRET'] %>
-  		options:
-  			secure: true
-  			cdn_subdomain: true
+ 	  service: Cloudinary
+  	  cloud_name: <%= ENV['CLOUDINARY_CLOUD_NAME'] %>
+  	  api_key:    <%= ENV['CLOUDINARY_API_KEY'] %>
+  	  api_secret: <%= ENV['CLOUDINARY_API_SECRET'] %>
+  	  options:
+  	    secure: true
+  	    cdn_subdomain: true
 
 
 
