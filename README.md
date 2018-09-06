@@ -121,14 +121,59 @@ Your routes should something like this
     
     post "images/upload" => "posts#upload"
 
-
 This code block comes from this man [ mwlang ](https://github.com/mwlang/medium-editor-insert-plugin-rails) big thanks to him
 
-## Development
+## With ActiveStorage
+You can make your own storage model, this is just a reference	
+``url_for`` is an active_storage helper
+		
+	# Upload model
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+	class Upload < ApplicationRecord
+		has_one_attached :image
+	end
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+
+	# UploadsController
+
+	class UploadsController < ApplicationController
+		def uploader
+			@image = Upload.new(image: params[:files].first)
+		  url_response = {
+		    files: [
+		      {
+		        url: url_for(@image.image),
+		        thumbnail_url: url_for(@image.image),
+		        type: "image/jpeg",
+		        size: 0
+		      }
+		    ]
+		  }
+		  render json: url_response
+		end
+
+	end
+
+## ActiveStorage with Cloudinary
+Use this gem
+[ActiveStorage cloudinary service gem](https://github.com/0sc/activestorage-cloudinary-service)
+
+	gem 'cloudinary', require: false
+	gem 'activestorage-cloudinary-service'
+
+
+and in your storage_yml. Add 'options:' if you want to serve your assests in https.
+	
+	cloudinary:
+  		service: Cloudinary
+  		cloud_name: <%= ENV['CLOUDINARY_CLOUD_NAME'] %>
+  		api_key:    <%= ENV['CLOUDINARY_API_KEY'] %>
+  		api_secret: <%= ENV['CLOUDINARY_API_SECRET'] %>
+  		options:
+  			secure: true
+  			cdn_subdomain: true
+
+
 
 ## Contributing
 
